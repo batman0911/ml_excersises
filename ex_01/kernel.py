@@ -3,24 +3,25 @@ import numpy as np
 
 class Kernel:
     def __int__(self,
-                kernel_type,
-                input_matrix):
+                kernel_type=None,
+                input_matrix=None):
         self.kernel_type = kernel_type
         self.input_matrix = input_matrix
 
-    def kernel(self):
-        pass
-
-    @classmethod
-    def identity_kernel(cls, X):
+    def identity_kernel(self, X):
         print(f'return the identity kernel matrix')
         return np.dot(X, X.T)
 
-    @classmethod
-    def gaussian_kernel(cls, X):
+    def gaussian_kernel(self, X):
         print(f'return the gaussian kernel matrix')
-        pass
+        N = X.shape[0]
+        sigma = 1
+        K = np.zeros((N, N))
+        for i in range(N):
+            for j in range(N):
+                K[i, j] = K[j, i] = self.kij_gaussian(X[i, :], X[j, :], sigma)
+        return K
 
     @classmethod
     def kij_gaussian(cls, x, y, sigma):
-        return np.exp(- 0.5 * np.dot(x - y, (x - y).T) / sigma**2)
+        return np.exp(- 0.5 * np.dot(x - y, (x - y).T) / sigma ** 2)
