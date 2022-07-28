@@ -15,11 +15,15 @@ class Kernel:
     def gaussian_kernel(self, X):
         print(f'return the gaussian kernel matrix')
         N = X.shape[0]
-        sigma = 1
+        sigma = 5 * np.sqrt(6)
         K = np.zeros((N, N))
+        tol = 1e-6
         for i in range(N):
             for j in range(N):
-                K[i, j] = K[j, i] = self.kij_gaussian(X[i, :], X[j, :], sigma)
+                k = self.kij_gaussian(X[i, :], X[j, :], sigma)
+                if abs(k) < tol:
+                    k = 0
+                K[i, j] = K[j, i] = np.around(k, decimals=4)
         return K
 
     @classmethod
