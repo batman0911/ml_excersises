@@ -28,9 +28,8 @@ def covariance_matrix(Z):
     return 1/Z.shape[0] * np.dot(Z.T, Z)
 
 
-def choose_dim(evls, alpha):
+def choose_dim(evls, d, alpha):
     s = np.sum(evls)
-    d = len(evls)
     for r in range(d):
         if np.sum(evls[0:r]) / s > alpha:
             return r
@@ -42,10 +41,27 @@ def pca(X, alpha):
     Z = center_data(X, mu)
     sigma = covariance_matrix(Z)
     evls, evts = eigen(sigma)
-    r = choose_dim(evls, alpha)
+    r = choose_dim(evls, len(evls), alpha)
     Ur = evts[0:r, :]
     return np.dot(X, Ur.T)
 
+def center_kernel(K):
+    N = K.shape[0]
+    full = np.full((N, N), 1 / N)
+    Ic = np.eye(N) - full
+    K = np.dot(np.dot(Ic, K), Ic)
+    return K
+
+
+def kernel_pca(K, d, alpha):
+    N = K.shape[0]
+    K = center_kernel(K)
+    evls, evts = eigen(K)
+    ld = evls / N
+    C = evts / np.sqrt(N)
+    r = choose_dim(ld, d, alpha)
+    Cr = C[0:r, :]
+    return np.dot(K, Cr.T)
 
 def svd(A):
     sigma2, VT = eigen(np.dot(A.T, A))
@@ -73,14 +89,25 @@ if __name__ == '__main__':
     # fit = pcask.fit_transform(X)
     # print(fit)
 
-    u, s, vh = np.linalg.svd(X)
-    u1, s1, vh1 = svd(X)
 
-    print(f'u: {u} \n\n s: {s} \n\n vh: {vh}')
-    print(f'\n\n')
-    print(f'u: {u1} \n\n s: {s1} \n\n vh: {vh1}')
+    K = np.array([
+        [1, 2, 3],
+        [2, 1, 2],
+        [3, 2, 1]
+    ])
 
-    A = np.dot(u1, np.diag(s1))
-    A = np.dot(A, vh1)
-    print(f'\n\n A: {A}')
+    k_pca = kernel_pca(K, 0)
+
+    print(f'kernel pca: {k_pca}')
+
+    # u, s, vh = np.linalg.svd(X)
+    # u1, s1, vh1 = svd(X)
+    #
+    # print(f'u: {u} \n\n s: {s} \n\n vh: {vh}')
+    # print(f'\n\n')
+    # print(f'u: {u1} \n\n s: {s1} \n\n vh: {vh1}')
+    #
+    # A = np.dot(u1, np.diag(s1))
+    # A = np.dot(A, vh1)
+    # print(f'\n\n A: {A}')
 
