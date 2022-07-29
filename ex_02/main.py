@@ -1,19 +1,25 @@
 import numpy as np
-from numpy.linalg import eig
+from sklearn import datasets
+
 import component as cp
 
 np.random.seed(2)
 
 if __name__ == '__main__':
-    print(f'hello dai ca Linh')
 
-    A = np.array([[0.681, -0.039, 1.265],
-                  [-0.039, 0.187, -0.32],
-                  [1.265, -0.32, 3.093]])
+    iris = datasets.load_iris()
 
-    evls, evts = cp.eigen(A)
+    X = iris.data
 
-    print(f'eigenvalues: {type(evls)}, evls: {evls}')
-    print(f'eigenvectors: {evts}')
+    print(f'shape of iris: {X.shape}')
 
-    print(f'mean vector: {cp.mean(A)}')
+    reduce_X = cp.pca(X, alpha=0.95)
+    print(f'reduce dim with pca: \n {reduce_X}')
+
+    X = cp.center_data(X, cp.mean(X))
+    u, s, vh = cp.svd(X)
+    print(f'singular value: {s}')
+
+    # check with np
+    un, sn,  vhn = np.linalg.svd(X)
+    print(f'singular values by np: {sn}')
