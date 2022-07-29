@@ -24,8 +24,26 @@ def center_data(X, mean):
 
 
 def covariance_matrix(Z):
-    1/Z.shape[0] * np.dot(Z.T, Z)
+    return 1/Z.shape[0] * np.dot(Z.T, Z)
 
 
-def fraction_variance(evls, r):
-    return np.sum(evls[0:r]) / np.sum(evls)
+def choose_dim(evls, alpha):
+    s = np.sum(evls)
+    d = len(evls)
+    for r in range(d):
+        if np.sum(evls[0:r]) / s > alpha:
+            return r
+    return d
+
+
+def pca(X, alpha):
+    mu = mean(X)
+    Z = center_data(X, mu)
+    sigma = covariance_matrix(Z)
+    evls, evts = eigen(sigma)
+    r = choose_dim(evls, alpha)
+    Ur = evts[0:r, :]
+    return np.dot()
+
+
+
