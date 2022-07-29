@@ -15,5 +15,5 @@ if __name__ == '__main__':
     K_identity = kn.identity_kernel(input_matrix)
     print(f'identity kernel matrix: \n {K_identity}')
 
-    K_gaussian = kn.gaussian_kernel(input_matrix)
+    K_gaussian = kn.gaussian_kernel(input_matrix, 150)
     print(f'gaussian kernel matrix: \n {K_gaussian}')
