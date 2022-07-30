@@ -25,7 +25,7 @@ def center_data(X, mean):
 
 
 def covariance_matrix(Z):
-    return 1/Z.shape[0] * np.dot(Z.T, Z)
+    return 1 / Z.shape[0] * np.dot(Z.T, Z)
 
 
 def choose_dim(evls, d, alpha):
@@ -45,6 +45,7 @@ def pca(X, alpha):
     Ur = evts[0:r, :]
     return np.dot(X, Ur.T)
 
+
 def center_kernel(K):
     N = K.shape[0]
     full = np.full((N, N), 1 / N)
@@ -63,6 +64,7 @@ def kernel_pca(K, d, alpha):
     Cr = C[0:r, :]
     return np.dot(K, Cr.T)
 
+
 def svd(A):
     sigma2, VT = eigen(np.dot(A.T, A))
     sigma = np.sqrt(sigma2)
@@ -70,7 +72,6 @@ def svd(A):
     for j in range(U.shape[1]):
         U[:, j] = U[:, j] / sigma[j]
     return U, sigma, VT
-
 
 
 if __name__ == '__main__':
@@ -88,7 +89,6 @@ if __name__ == '__main__':
     # pcask = PCA(n_components=2)
     # fit = pcask.fit_transform(X)
     # print(fit)
-
 
     K = np.array([
         [1, 2, 3],
@@ -110,4 +110,3 @@ if __name__ == '__main__':
     # A = np.dot(u1, np.diag(s1))
     # A = np.dot(A, vh1)
     # print(f'\n\n A: {A}')
-

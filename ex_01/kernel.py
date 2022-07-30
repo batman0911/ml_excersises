@@ -11,7 +11,7 @@ def kij_gaussian(x, y, sigma2):
 
 
 def gaussian_kernel(X, sigma2=1):
-    print(f'return the gaussian kernel matrix')
+    # print(f'return the gaussian kernel matrix')
     N = X.shape[0]
     K = np.zeros((N, N))
     tol = 1e-6

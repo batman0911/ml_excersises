@@ -15,7 +15,7 @@ if __name__ == '__main__':
     print(f'shape of iris: {X.shape}')
 
     print('\n\n-------- pca -----------')
-    reduce_X = cp.pca(X, alpha=0.95)
+    reduce_X = cp.pca(X, alpha=0.99)
     print(f'reduce dim with pca: \n {reduce_X}')
     print('-------- pca -----------')
 
@@ -23,6 +23,7 @@ if __name__ == '__main__':
     K_identity = kn.identity_kernel(X)
     print(f'identity kernel: \n {K_identity}')
     K_gaussian = kn.gaussian_kernel(X, 1)
+    print(f'gaussian kernel: \n {K_gaussian}')
     reduce_X_kn_cpa = cp.kernel_pca(K_gaussian, X.shape[1], 0.99)
     print(f'reduce dim with kernel cpa: \n {reduce_X_kn_cpa}')
     print('-------- kernel pca ----')
