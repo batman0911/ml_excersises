@@ -8,6 +8,6 @@ pip install -r requirements.txt
 
 ### Execute
 ```shell
-> cd ex_{i}
+> cd ex_set_{i}/ex_{j}
 > python main.py
 ```

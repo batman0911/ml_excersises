@@ -2,7 +2,7 @@ import numpy as np
 from sklearn import datasets
 
 import component as cp
-import ex_01.kernel as kn
+import ex_set_01.ex_01.kernel as kn
 
 np.random.seed(2)
 
