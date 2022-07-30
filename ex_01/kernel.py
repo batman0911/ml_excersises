@@ -2,7 +2,6 @@ import numpy as np
 
 
 def identity_kernel(X):
-    print(f'return the identity kernel matrix')
     return np.dot(X, X.T)
 
 
